@@ -1857,10 +1857,10 @@
     <div class="about-visual reveal">
       <div class="about-dots"></div>
       <div class="about-card c1">
-        <img src="port/peacock.jpg" alt="Featured work" />
+        <img src="Port/peacock.jpg" alt="Featured work" />
       </div>
       <div class="about-card c2">
-        <img src="port/Circle design.jpg" alt="Design work" />
+        <img src="Port/Circle design.jpg" alt="Design work" />
       </div>
       <div class="about-badge">✦ Available for Projects</div>
       <div class="about-ring"></div>
@@ -2292,7 +2292,7 @@
       div.dataset.cat = item.cat;
       div.dataset.idx = idx;
       div.innerHTML = `
-      <img src="port/${encodeURIComponent(item.file)}" alt="${item.title}" loading="lazy" />
+      <img src="Port/${encodeURIComponent(item.file)}" alt="${item.title}" loading="lazy" />
       <div class="gallery-overlay">
         <div class="gallery-title">${item.title}</div>
         <div class="gallery-cat-tag">${item.cat}</div>
@@ -2332,7 +2332,7 @@
 
     function openLightbox(globalIdx) {
       const item = galleryData[globalIdx];
-      lightboxImg.src = 'port/' + encodeURIComponent(item.file);
+      lightboxImg.src = 'Port/' + encodeURIComponent(item.file);
       lightboxImg.alt = item.title;
       lightboxCaption.innerHTML = `<strong>${item.title}</strong> &nbsp;·&nbsp; ${item.cat}`;
       currentIndex = visibleItems.indexOf(item);
@@ -2352,7 +2352,7 @@
       lightboxImg.style.opacity = '0';
       lightboxImg.style.transform = 'scale(0.95)';
       setTimeout(() => {
-        lightboxImg.src = 'port/' + encodeURIComponent(item.file);
+        lightboxImg.src = 'Port/' + encodeURIComponent(item.file);
         lightboxImg.alt = item.title;
         lightboxCaption.innerHTML = `<strong>${item.title}</strong> &nbsp;·&nbsp; ${item.cat}`;
         lightboxImg.style.opacity = '1';

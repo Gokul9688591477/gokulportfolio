@@ -1,0 +1,2492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gokul Rajaa | Graphic Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
+  <style>
+    /* ─── RESET & VARIABLES ─────────────────────────────────────────── */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --cream: #faf7f2;
+      --white: #ffffff;
+      --ink: #0a1c33;
+      --ink-60: #0a1c3399;
+      --ink-30: #0a1c334d;
+      --accent: #0c3970;
+      --accent-2: #c7af93;
+      --sand: #f3ebd9;
+      --sand-2: #dfccb7;
+      --green: #2b4d66;
+      --radius: 14px;
+      --transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ─── CUSTOM CURSOR ─────────────────────────────────────────────── */
+    .cursor {
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+    }
+
+    .cursor-ring {
+      width: 36px;
+      height: 36px;
+      border: 1.5px solid var(--accent);
+      border-radius: 50%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.18s ease, width 0.3s, height 0.3s, border-color 0.3s, border-style 0.3s;
+      opacity: 0.7;
+    }
+
+    body:has(a:hover) .cursor,
+    body:has(button:hover) .cursor,
+    body:has(.gallery-item:hover) .cursor {
+      width: 6px;
+      height: 6px;
+      background: var(--accent-2);
+    }
+
+    body:has(a:hover) .cursor-ring,
+    body:has(button:hover) .cursor-ring,
+    body:has(.gallery-item:hover) .cursor-ring {
+      width: 56px;
+      height: 56px;
+      border-color: var(--accent-2);
+      border-width: 2px;
+      border-style: dashed;
+      animation: spin 8s linear infinite;
+      opacity: 0.8;
+    }
+
+    /* ─── SCROLLBAR ─────────────────────────────────────────────────── */
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--sand);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 99px;
+    }
+
+    /* ─── SCROLL PROGRESS BAR ───────────────────────────────────────── */
+    .scroll-progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: linear-gradient(to right, var(--accent-2), var(--accent));
+      z-index: 9999;
+      transition: width 0.1s ease-out;
+      box-shadow: 0 0 8px rgba(12, 57, 112, 0.4);
+    }
+
+    /* ─── NAVBAR ────────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 6vw;
+      background: transparent;
+      transition: background 0.4s, padding 0.4s, box-shadow 0.4s;
+    }
+
+    nav.scrolled {
+      background: rgba(250, 248, 244, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 14px 6vw;
+      box-shadow: 0 1px 0 var(--sand-2);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-60);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background: var(--accent);
+      transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      background: var(--ink);
+      color: var(--cream) !important;
+      padding: 9px 22px;
+      border-radius: 99px;
+      transition: background 0.3s !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--accent) !important;
+      color: #fff !important;
+    }
+
+    .nav-cta::after {
+      display: none !important;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: none;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--ink);
+      border-radius: 2px;
+      transition: 0.35s;
+    }
+
+    /* ─── HERO ──────────────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 6vw 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-shape {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+
+    .hero-bg-shape.s1 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(223, 204, 183, 0.32) 0%, transparent 70%);
+      top: -100px;
+      right: -80px;
+      animation: float-slow 16s ease-in-out infinite;
+    }
+
+    .hero-bg-shape.s2 {
+      width: 360px;
+      height: 360px;
+      background: radial-gradient(circle, rgba(12, 57, 112, 0.08) 0%, transparent 70%);
+      bottom: 0;
+      left: 10%;
+      animation: float-slower 22s ease-in-out infinite alternate;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: premiumReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 30px;
+      height: 1.5px;
+      background: var(--accent);
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: premiumReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--ink-60);
+      max-width: 520px;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: premiumReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      opacity: 0;
+      animation: premiumReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--accent) 0%, #1c5294 100%);
+      background-size: 200% 100%;
+      background-position: left center;
+      color: #fff;
+      padding: 15px 34px;
+      border-radius: 99px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-position 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 6px 24px rgba(12, 57, 112, 0.24);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      background-position: right center;
+      box-shadow: 0 12px 32px rgba(12, 57, 112, 0.35);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1.5px solid var(--ink-30);
+      color: var(--ink);
+      padding: 14px 28px;
+      border-radius: 99px;
+      font-size: 0.92rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: border-color 0.4s, color 0.4s, background-color 0.4s, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: #fff;
+      background-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .hero-stats {
+      position: absolute;
+      right: 6vw;
+      bottom: 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      opacity: 0;
+      transform: translateX(30px);
+      animation: fadeRight 1s 0.8s forwards;
+    }
+
+    .stat-item {
+      text-align: right;
+    }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem;
+      font-weight: 900;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--ink-60);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px;
+      left: 6vw;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.75rem;
+      color: var(--ink-60);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 0.9s 1s forwards;
+    }
+
+    .scroll-line {
+      width: 40px;
+      height: 1px;
+      background: var(--ink-30);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scroll-line::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--accent);
+      animation: scrollLine 2s 1.5s infinite;
+    }
+
+    /* ─── SECTION COMMON ────────────────────────────────────────────── */
+    section {
+      padding: 100px 6vw;
+    }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .section-tag::before {
+      content: '';
+      display: inline-block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--accent);
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--ink-60);
+      max-width: 520px;
+    }
+
+    /* ─── ABOUT ─────────────────────────────────────────────────────── */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-visual {
+      position: relative;
+      height: 480px;
+    }
+
+    .about-card {
+      position: absolute;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    .about-card.c1 {
+      width: 68%;
+      height: 72%;
+      top: 0;
+      left: 0;
+    }
+
+    .about-card.c2 {
+      width: 52%;
+      height: 52%;
+      bottom: 0;
+      right: 0;
+      border: 3px solid var(--white);
+    }
+
+    .about-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-badge {
+      position: absolute;
+      bottom: 24%;
+      right: 24%;
+      transform: translate(50%, 50%);
+      background: var(--accent);
+      color: #fff;
+      border-radius: 99px;
+      padding: 12px 22px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      white-space: nowrap;
+      box-shadow: 0 4px 20px #d4560a44;
+    }
+
+    .about-dots {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 80px;
+      height: 80px;
+      background-image: radial-gradient(var(--sand-2) 2px, transparent 2px);
+      background-size: 12px 12px;
+      border-radius: 4px;
+    }
+
+    .about-ring {
+      position: absolute;
+      bottom: -24px;
+      left: -24px;
+      width: 80px;
+      height: 80px;
+      border: 2px solid var(--accent-2);
+      border-radius: 50%;
+      opacity: 0.5;
+    }
+
+    .about-list {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .about-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px 20px;
+      background: var(--white);
+      border-radius: 10px;
+      border: 1px solid var(--sand-2);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .about-item:hover {
+      transform: translateX(6px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .about-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: var(--sand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .about-item-text strong {
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .about-item-text span {
+      font-size: 0.8rem;
+      color: var(--ink-60);
+    }
+
+    /* ─── SERVICES ──────────────────────────────────────────────────── */
+    #services {
+      background: var(--sand);
+    }
+
+    .services-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 56px;
+      gap: 40px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .service-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 36px 28px;
+      border: 1px solid var(--sand-2);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 48px rgba(10, 28, 51, 0.08);
+      border-color: var(--accent);
+    }
+
+    .service-card:hover::before {
+      height: 100%;
+    }
+
+    .service-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: var(--sand-2);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .service-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+
+    .service-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .service-desc {
+      font-size: 0.85rem;
+      color: var(--ink-60);
+      line-height: 1.65;
+    }
+
+    /* ─── GALLERY ───────────────────────────────────────────────────── */
+
+    .gallery-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 32px;
+      margin-bottom: 44px;
+    }
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 28px;
+    }
+
+    .filter-btn {
+      padding: 9px 20px;
+      border: 1.5px solid var(--sand-2);
+      background: transparent;
+      border-radius: 99px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--ink-60);
+      cursor: none;
+      transition: all 0.3s;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--ink-30);
+      color: var(--ink);
+    }
+
+    .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 16px #d4560a30;
+    }
+
+    .gallery-count {
+      font-size: 0.82rem;
+      color: var(--ink-60);
+      align-self: flex-end;
+    }
+
+    .gallery-count span {
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .gallery-grid {
+      columns: 4;
+      column-gap: 16px;
+    }
+
+    @media (max-width: 1100px) {
+      .gallery-grid {
+        columns: 3;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .gallery-grid {
+        columns: 2;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-grid {
+        columns: 1;
+      }
+    }
+
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 16px;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      cursor: none;
+      background: var(--sand);
+      transition: transform var(--transition);
+    }
+
+    .gallery-item.hidden {
+      display: none;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.04);
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(26, 24, 20, 0.72) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.4s;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 18px;
+    }
+
+    .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+    }
+
+    .gallery-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .gallery-cat-tag {
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.65);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .gallery-zoom {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(8px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.7);
+      transition: opacity 0.35s, transform 0.35s;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .gallery-item:hover .gallery-zoom {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* ─── LIGHTBOX ──────────────────────────────────────────────────── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(250, 248, 244, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s;
+    }
+
+    .lightbox.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .lightbox-inner {
+      max-width: 90vw;
+      max-height: 90vh;
+      position: relative;
+      transform: scale(0.9);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .lightbox.open .lightbox-inner {
+      transform: scale(1);
+    }
+
+    .lightbox-inner img {
+      max-width: 85vw;
+      max-height: 82vh;
+      border-radius: var(--radius);
+      box-shadow: 0 40px 120px rgba(0, 0, 0, 0.2);
+      display: block;
+      object-fit: contain;
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 28px;
+      right: 36px;
+      width: 44px;
+      height: 44px;
+      background: var(--white);
+      border: 1.5px solid var(--sand-2);
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s, background 0.3s;
+      z-index: 1001;
+    }
+
+    .lightbox-close:hover {
+      transform: rotate(90deg);
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .lightbox-nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      background: var(--white);
+      border: 1.5px solid var(--sand-2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: none;
+      transition: background 0.3s, transform 0.3s;
+      z-index: 1001;
+    }
+
+    .lightbox-nav:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .lightbox-prev {
+      left: 24px;
+    }
+
+    .lightbox-next {
+      right: 24px;
+    }
+
+    .lightbox-prev:hover {
+      transform: translateY(-50%) translateX(-2px);
+    }
+
+    .lightbox-next:hover {
+      transform: translateY(-50%) translateX(2px);
+    }
+
+    .lightbox-caption {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 0.85rem;
+      color: var(--ink-60);
+    }
+
+    .lightbox-caption strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* ─── PROCESS ───────────────────────────────────────────────────── */
+    #process {
+      background: var(--ink);
+      color: var(--cream);
+    }
+
+    #process .section-tag {
+      color: var(--accent-2);
+    }
+
+    #process .section-tag::before {
+      background: var(--accent-2);
+    }
+
+    #process .section-title {
+      color: var(--cream);
+    }
+
+    #process .section-desc {
+      color: rgba(250, 248, 244, 0.55);
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 2px;
+      margin-top: 60px;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .process-step {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 40px 28px;
+      transition: background 0.3s;
+      position: relative;
+    }
+
+    .process-step:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: rgba(212, 86, 10, 0.2);
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+
+    .step-name {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--cream);
+    }
+
+    .step-desc {
+      font-size: 0.83rem;
+      color: rgba(250, 248, 244, 0.5);
+      line-height: 1.65;
+    }
+
+    /* ─── TESTIMONIALS ──────────────────────────────────────────────── */
+
+    .testimonials-header {
+      margin-bottom: 52px;
+    }
+
+    .testimonials-track {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonials-grid {
+      display: flex;
+      gap: 20px;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .testimonial-card {
+      background: var(--white);
+      border: 1px solid var(--sand-2);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      flex: 0 0 calc(33.33% - 14px);
+      min-width: 280px;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.07);
+    }
+
+    .testi-quote {
+      font-size: 2.5rem;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .testi-text {
+      font-size: 0.92rem;
+      line-height: 1.75;
+      color: var(--ink-60);
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .testi-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--sand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: 'Playfair Display', serif;
+    }
+
+    .testi-name {
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .testi-role {
+      font-size: 0.75rem;
+      color: var(--ink-60);
+    }
+
+    .testi-nav {
+      display: flex;
+      gap: 10px;
+      margin-top: 28px;
+      justify-content: flex-end;
+    }
+
+    .testi-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid var(--sand-2);
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: none;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+
+    .testi-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* ─── CONTACT ───────────────────────────────────────────────────── */
+    #contact {
+      background: var(--sand);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink-60);
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      padding: 14px 18px;
+      border: 1.5px solid var(--sand-2);
+      border-radius: 10px;
+      background: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      color: var(--ink);
+      transition: border-color 0.3s, box-shadow 0.3s;
+      outline: none;
+      resize: none;
+      cursor: none;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px #d4560a18;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 16px 36px;
+      border-radius: 99px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: none;
+      align-self: flex-start;
+      transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+      box-shadow: 0 4px 24px #d4560a33;
+    }
+
+    .form-submit:hover {
+      transform: translateY(-2px);
+      background: #b94808;
+      box-shadow: 0 8px 32px #d4560a44;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .contact-info .section-desc {
+      margin-top: 16px;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 22px;
+      background: var(--white);
+      border-radius: 12px;
+      border: 1px solid var(--sand-2);
+      text-decoration: none;
+      color: var(--ink);
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+
+    .contact-link:hover {
+      transform: translateX(6px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .contact-link-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: var(--sand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .contact-link-text strong {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .contact-link-text span {
+      font-size: 0.8rem;
+      color: var(--ink-60);
+    }
+
+    /* ─── FOOTER ────────────────────────────────────────────────────── */
+    .premium-footer {
+      position: relative;
+      background: radial-gradient(circle at top right, #112d4e, var(--ink));
+      color: var(--cream);
+      padding: 100px 6vw 40px;
+      border-top: 1px solid rgba(199, 175, 147, 0.15);
+      overflow: hidden;
+    }
+
+    .footer-particles .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--accent-2);
+      filter: blur(40px);
+      opacity: 0.15;
+      z-index: 0;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .footer-particles .p1 {
+      width: 300px;
+      height: 300px;
+      top: -100px;
+      left: -100px;
+      animation-duration: 10s;
+    }
+
+    .footer-particles .p2 {
+      width: 250px;
+      height: 250px;
+      bottom: 50px;
+      right: 10%;
+      animation-duration: 12s;
+      animation-delay: -3s;
+    }
+
+    .footer-particles .p3 {
+      width: 150px;
+      height: 150px;
+      top: 40%;
+      left: 50%;
+      animation-duration: 9s;
+      animation-delay: -5s;
+    }
+
+    .premium-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(8rem, 15vw, 16rem);
+      font-weight: 900;
+      color: rgba(250, 247, 242, 0.02);
+      letter-spacing: 0.1em;
+      pointer-events: none;
+      user-select: none;
+      white-space: nowrap;
+      z-index: 1;
+      animation: pulseText 8s infinite alternate;
+    }
+
+    @keyframes pulseText {
+      0% {
+        opacity: 0.01;
+        transform: translate(-50%, -50%) scale(0.98);
+      }
+
+      100% {
+        opacity: 0.04;
+        transform: translate(-50%, -50%) scale(1.02);
+      }
+    }
+
+    .premium-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 50px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 35px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .premium-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--cream);
+      letter-spacing: -0.01em;
+      margin-bottom: 18px;
+      display: inline-block;
+      transition: transform 0.4s ease;
+    }
+
+    .premium-logo:hover {
+      transform: scale(1.02);
+    }
+
+    .premium-logo span {
+      color: var(--accent-2);
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .premium-grid .footer-tagline {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: rgba(250, 248, 244, 0.6);
+      max-width: 320px;
+      margin-bottom: 30px;
+    }
+
+    .footer-info-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: rgba(250, 248, 244, 0.5);
+      margin-bottom: 14px;
+      transition: color 0.3s ease;
+    }
+
+    .footer-info-item:hover {
+      color: var(--accent-2);
+    }
+
+    .footer-info-item svg {
+      width: 16px;
+      height: 16px;
+      color: var(--accent-2);
+      flex-shrink: 0;
+    }
+
+    .footer-col-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--white);
+      margin-bottom: 28px;
+      font-weight: 600;
+      position: relative;
+      display: inline-block;
+    }
+
+    .footer-col-title::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -8px;
+      width: 20px;
+      height: 2px;
+      background: var(--accent-2);
+      transition: width 0.3s ease;
+    }
+
+    .footer-nav-col:hover .footer-col-title::after,
+    .footer-social-col:hover .footer-col-title::after,
+    .footer-practice-col:hover .footer-col-title::after {
+      width: 100%;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .footer-links a {
+      font-size: 0.95rem;
+      color: rgba(250, 248, 244, 0.5);
+      text-decoration: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: fit-content;
+      cursor: none;
+    }
+
+    .link-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--accent-2);
+      border-radius: 50%;
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--cream);
+      transform: translateX(8px);
+      text-shadow: 0 0 10px rgba(199, 175, 147, 0.3);
+    }
+
+    .footer-links a:hover .link-dot {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .practice-text {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: rgba(250, 248, 244, 0.5);
+      margin: 0 0 25px;
+      max-width: 280px;
+    }
+
+    .premium-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(199, 175, 147, 0.3);
+      color: var(--accent-2);
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .premium-btn svg {
+      transition: transform 0.3s ease;
+    }
+
+    .premium-btn:hover {
+      background: var(--accent-2);
+      color: var(--ink);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(199, 175, 147, 0.2);
+    }
+
+    .premium-btn:hover svg {
+      transform: translateY(-2px);
+    }
+
+    .premium-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer-copy {
+      font-size: 0.85rem;
+      color: rgba(250, 248, 244, 0.4);
+    }
+
+    .footer-social-icons {
+      display: flex;
+      gap: 16px;
+    }
+
+    .social-icon-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.03);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(250, 248, 244, 0.6);
+      text-decoration: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: none;
+    }
+
+    .social-icon-btn svg {
+      display: block;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .social-icon-btn:hover {
+      background: var(--accent-2);
+      border-color: var(--accent-2);
+      color: var(--ink);
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 10px 20px rgba(199, 175, 147, 0.2);
+    }
+
+    .social-icon-btn:hover svg {
+      transform: scale(1.1);
+    }
+
+    /* ─── REVEAL ANIMATIONS ─────────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 {
+      transition-delay: 0.1s;
+    }
+
+    .reveal-delay-2 {
+      transition-delay: 0.2s;
+    }
+
+    .reveal-delay-3 {
+      transition-delay: 0.3s;
+    }
+
+    .reveal-delay-4 {
+      transition-delay: 0.4s;
+    }
+
+    /* ─── KEYFRAMES ─────────────────────────────────────────────────── */
+    @keyframes premiumReveal {
+      0% {
+        opacity: 0;
+        transform: translateY(60px) skewY(3deg);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0) skewY(0deg);
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes scrollLine {
+      0% {
+        left: -100%;
+      }
+
+      100% {
+        left: 100%;
+      }
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-12px);
+      }
+    }
+
+    @keyframes float-slow {
+
+      0%,
+      100% {
+        transform: translateY(0) scale(1);
+      }
+
+      50% {
+        transform: translateY(-24px) scale(1.05);
+      }
+    }
+
+    @keyframes float-slower {
+
+      0%,
+      100% {
+        transform: translateY(0) scale(1) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(18px) scale(0.96) rotate(15deg);
+      }
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* ─── MOBILE ────────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      body {
+        cursor: auto;
+      }
+
+      .cursor,
+      .cursor-ring {
+        display: none;
+      }
+
+      #about {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .about-visual {
+        height: 320px;
+      }
+
+      #contact {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .hero-stats {
+        display: none;
+      }
+
+      .testimonial-card {
+        flex: 0 0 calc(80% - 10px);
+      }
+
+      .premium-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--cream);
+        align-items: center;
+        justify-content: center;
+        gap: 36px;
+        z-index: 99;
+      }
+
+      .nav-links.open a {
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .process-steps {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Scroll Progress -->
+  <div id="scrollProgress" class="scroll-progress-bar"></div>
+
+  <!-- ─── NAVBAR ──────────────────────────────── -->
+  <nav id="navbar">
+    <a href="#" class="nav-logo">Gokul Rajaa | <span>Graphic Designer</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#contact" class="nav-cta">Hire Me</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- ─── HERO ──────────────────────────────────── -->
+  <section id="hero">
+    <div class="hero-bg-shape s1"></div>
+    <div class="hero-bg-shape s2"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Graphic Designer & Visual Storyteller</div>
+      <h1 class="hero-title">
+        Crafting Brands<br>That <em>Speak</em><br>& Inspire.
+      </h1>
+      <p class="hero-sub">
+        I'm Gokul Rajaa — a passionate graphic designer turning ideas into bold,
+        memorable visual identities. Logos, posters, packaging, and beyond.
+      </p>
+      <div class="hero-actions">
+        <a href="#gallery" class="btn-primary">View My Work ↓</a>
+        <a href="#contact" class="btn-outline">Let's Collaborate →</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">60+</div>
+        <div class="stat-label">Projects Done</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Years Exp.</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Satisfaction</div>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      Scroll to explore
+    </div>
+  </section>
+
+  <!-- ─── ABOUT ────────────────────────────────── -->
+  <section id="about">
+    <div class="about-visual reveal">
+      <div class="about-dots"></div>
+      <div class="about-card c1">
+        <img src="port/peacock.jpg" alt="Featured work" />
+      </div>
+      <div class="about-card c2">
+        <img src="port/Circle design.jpg" alt="Design work" />
+      </div>
+      <div class="about-badge">✦ Available for Projects</div>
+      <div class="about-ring"></div>
+    </div>
+    <div class="about-text">
+      <div class="section-tag">About Me</div>
+      <h2 class="section-title">Design is my<br>language of choice.</h2>
+      <p class="section-desc">
+        Based in India, I create visual experiences that connect brands with their
+        audiences. From brand identity to print design, every pixel is intentional.
+      </p>
+      <div class="about-list">
+        <div class="about-item reveal reveal-delay-1">
+          <div class="about-icon">🎨</div>
+          <div class="about-item-text">
+            <strong>Brand Identity Design</strong>
+            <span>Logos, color systems, brand guidelines</span>
+          </div>
+        </div>
+        <div class="about-item reveal reveal-delay-2">
+          <div class="about-icon">🖨️</div>
+          <div class="about-item-text">
+            <strong>Print & Packaging</strong>
+            <span>Labels, posters, brochures, business cards</span>
+          </div>
+        </div>
+        <div class="about-item reveal reveal-delay-3">
+          <div class="about-icon">📱</div>
+          <div class="about-item-text">
+            <strong>Social Media Creatives</strong>
+            <span>Covers, campaigns, promotional artwork</span>
+          </div>
+        </div>
+        <div class="about-item reveal reveal-delay-4">
+          <div class="about-icon">💻</div>
+          <div class="about-item-text">
+            <strong>UI / Web Mockups</strong>
+            <span>Landing pages, app screens</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SERVICES ─────────────────────────────── -->
+  <section id="services">
+    <div class="services-header">
+      <div>
+        <div class="section-tag reveal">What I Do</div>
+        <h2 class="section-title reveal reveal-delay-1">Services Offered</h2>
+      </div>
+      <p class="section-desc reveal reveal-delay-2" style="max-width:340px;">
+        End-to-end design solutions that elevate your brand's visual presence.
+      </p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-num">01</div>
+        <div class="service-icon">🏷️</div>
+        <div class="service-name">Logo & Branding</div>
+        <p class="service-desc">Complete brand identity packages — wordmarks, symbols, color palettes, and typography
+          systems.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-num">02</div>
+        <div class="service-icon">🖼️</div>
+        <div class="service-name">Poster Design</div>
+        <p class="service-desc">Eye-catching promotional and event posters designed for print and digital media.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-num">03</div>
+        <div class="service-icon">📦</div>
+        <div class="service-name">Label & Packaging</div>
+        <p class="service-desc">Product labels, packaging design, and point-of-sale materials for FMCG brands.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-num">04</div>
+        <div class="service-icon">💼</div>
+        <div class="service-name">Business Collateral</div>
+        <p class="service-desc">Business cards, letterheads, brochures, and corporate stationery design.</p>
+      </div>
+      <div class="service-card reveal reveal-delay-4">
+        <div class="service-num">05</div>
+        <div class="service-icon">📲</div>
+        <div class="service-name">Social Media Design</div>
+        <p class="service-desc">Facebook covers, Instagram templates, banners, and ad creatives.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-num">06</div>
+        <div class="service-icon">🖥️</div>
+        <div class="service-name">Web & UI Mockups</div>
+        <p class="service-desc">Landing page mockups, and app screen designs.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── GALLERY ───────────────────────────────── -->
+  <section id="gallery">
+    <div class="gallery-header">
+      <div>
+        <div class="section-tag reveal">Portfolio</div>
+        <h2 class="section-title reveal reveal-delay-1">Creative Gallery</h2>
+        <div class="filter-bar" id="filterBar"></div>
+      </div>
+      <p class="gallery-count">Showing <span id="visibleCount">66</span> of <span>66</span> works</p>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </section>
+
+  <!-- ─── PROCESS ───────────────────────────────── -->
+  <section id="process">
+    <div class="section-tag reveal">How I Work</div>
+    <h2 class="section-title reveal reveal-delay-1">My Design Process</h2>
+    <p class="section-desc reveal reveal-delay-2">A clear, collaborative approach from brief to final delivery.</p>
+    <div class="process-steps reveal reveal-delay-3">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="step-name">Discovery</div>
+        <p class="step-desc">Understanding your brand, audience, goals, and competitive landscape through in-depth
+          briefing.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="step-name">Concept</div>
+        <p class="step-desc">Exploring multiple creative directions through sketches, mood boards, and ideation.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="step-name">Design</div>
+        <p class="step-desc">Crafting the chosen concept into polished, production-ready design files with precision.
+        </p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div class="step-name">Revise</div>
+        <p class="step-desc">Iterating on feedback with up to 3 revision rounds to get everything perfect.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">05</div>
+        <div class="step-name">Deliver</div>
+        <p class="step-desc">Exporting final files in all required formats — print-ready and digital — with source
+          files.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ─── CONTACT ───────────────────────────────── -->
+  <section id="contact">
+    <div class="contact-info">
+      <div>
+        <div class="section-tag reveal">Get In Touch</div>
+        <h2 class="section-title reveal reveal-delay-1">Let's Create<br>Something Great.</h2>
+        <p class="section-desc reveal reveal-delay-2">
+          Have a project in mind? I'd love to hear about it. Send me a message
+          and let's start the conversation.
+        </p>
+      </div>
+      <div class="contact-links reveal reveal-delay-3">
+        <a href="mailto:gokul.graphicarts@gmail.com" class="contact-link">
+          <div class="contact-link-icon">✉️</div>
+          <div class="contact-link-text">
+            <strong>Email Me</strong>
+            <span>gokul.graphicarts@gmail.com</span>
+          </div>
+        </a>
+        <a href="tel:+919688591477" class="contact-link">
+          <div class="contact-link-icon">📞</div>
+          <div class="contact-link-text">
+            <strong>Call / WhatsApp</strong>
+            <span>+91 96885 91477</span>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/gokul-rajaa-eswaran-752906236?utm_source=share_via&amp;utm_content=profile&amp;utm_medium=member_android" class="contact-link" target="_blank" rel="noopener noreferrer">
+          <div class="contact-link-icon">🔗</div>
+          <div class="contact-link-text">
+            <strong>LinkedIn</strong>
+            <span>Gokul Rajaa</span>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="contact-form reveal reveal-delay-2">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" id="contactName" placeholder="John Doe" />
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="contactEmail" placeholder="john@email.com" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" id="contactPhone" placeholder="+91 96885 91477" />
+        </div>
+        <div class="form-group">
+          <label>Service Needed</label>
+          <select id="contactService">
+          <option value="">Select a service…</option>
+          <option>Logo & Branding</option>
+          <option>Poster Design</option>
+          <option>Label & Packaging</option>
+          <option>Business Collateral</option>
+          <option>Social Media Design</option>
+          <option>Web & UI Mockups</option>
+          <option>Other</option>
+        </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Project Brief</label>
+        <textarea id="contactMessage" rows="5" placeholder="Tell me about your project, timeline, and budget…"></textarea>
+      </div>
+      <button class="form-submit" id="contactSubmit">Send Message →</button>
+    </div>
+  </section>
+
+  <!-- ─── PREMIUM FOOTER ────────────────────────────── -->
+  <footer class="premium-footer">
+    <div class="footer-particles">
+      <div class="particle p1"></div>
+      <div class="particle p2"></div>
+      <div class="particle p3"></div>
+    </div>
+
+    <div class="footer-watermark premium-watermark">GOKUL</div>
+
+    <div class="footer-top premium-grid">
+      <div class="footer-brand-col">
+        <div class="footer-logo premium-logo">Gokul Rajaa | <span>Graphic Designer</span></div>
+        <div class="footer-tagline">Design that tells your story with a premium editorial identity. Elevating brands
+          through visual excellence.</div>
+        <div class="footer-info-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <span>Salem, Tamil Nadu, India</span>
+        </div>
+        <div class="footer-info-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <span>gokul.graphicarts@gmail.com</span>
+        </div>
+      </div>
+
+      <div class="footer-nav-col">
+        <div class="footer-col-title">Navigate</div>
+        <div class="footer-links">
+          <a href="#about"><span class="link-dot"></span>About</a>
+          <a href="#services"><span class="link-dot"></span>Services</a>
+          <a href="#gallery"><span class="link-dot"></span>Gallery</a>
+          <a href="#process"><span class="link-dot"></span>Process</a>
+          <a href="#contact"><span class="link-dot"></span>Contact</a>
+        </div>
+      </div>
+
+      <div class="footer-social-col">
+        <div class="footer-col-title">Networks</div>
+        <div class="footer-links">
+          <a href="https://www.linkedin.com/in/gokul-rajaa-eswaran-752906236?utm_source=share_via&amp;utm_content=profile&amp;utm_medium=member_android" target="_blank" rel="noopener noreferrer"><span class="link-dot"></span>LinkedIn</a>
+        </div>
+      </div>
+
+      <div class="footer-practice-col">
+        <div class="footer-col-title">Practice</div>
+        <p class="practice-text">
+          Crafting bespoke branding, print publications, labels, packaging layouts, and digital identities.
+        </p>
+        <button class="back-to-top premium-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+          Back to Top
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5 12 12 5 19 12"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="footer-bottom premium-bottom">
+      <div class="footer-copy">© 2025 Gokul Rajaa. All rights reserved.</div>
+      <div class="footer-social-icons">
+        <a href="https://www.linkedin.com/in/gokul-rajaa-eswaran-752906236?utm_source=share_via&amp;utm_content=profile&amp;utm_medium=member_android" class="social-icon-btn" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+            <rect x="2" y="9" width="4" height="12"></rect>
+            <circle cx="4" cy="4" r="2"></circle>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ─── LIGHTBOX ──────────────────────────────── -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">✕</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev">←</button>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext">→</button>
+    <div class="lightbox-inner">
+      <img src="" alt="" id="lightboxImg" />
+      <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+  </div>
+
+  <script>
+    /* ───────────────────────────────────────────────
+       GALLERY DATA — all 66 images with categories
+    ─────────────────────────────────────────────── */
+    const galleryData = [
+      // Logos
+      { file: "Poongodi Tex_Logo-01.jpg", title: "Poongodi Tex Logo", cat: "Logo" },
+      { file: "Poongodi Tex_Logo-02.jpg", title: "Poongodi Tex Logo V2", cat: "Logo" },
+      { file: "Poongodi Tex_Logo-03.jpg", title: "Poongodi Tex Logo V3", cat: "Logo" },
+      { file: "Poongodi Tex_Logo_04-01.jpg", title: "Poongodi Tex Logo 04-A", cat: "Logo" },
+      { file: "Poongodi Tex_Logo_04-02.jpg", title: "Poongodi Tex Logo 04-B", cat: "Logo" },
+      { file: "Poongodi Tex_Logo_04-03.jpg", title: "Poongodi Tex Logo 04-C", cat: "Logo" },
+      { file: "Poongodi Tex_Logo_04-04.jpg", title: "Poongodi Tex Logo 04-D", cat: "Logo" },
+      { file: "Viji creation logo.jpg", title: "Viji creation logo", cat: "Logo" },
+
+
+      // Business Cards
+      { file: "Business Card_01.jpg", title: "Business Card Design", cat: "Print" },
+      { file: "Business Card_01@4x.jpg", title: "Business Card Hi-Res", cat: "Print" },
+      { file: "MSK_FB_Coverpage-01.jpg", title: "MSK Facebook Cover 01", cat: "Print" },
+
+      // Labels & Packaging
+
+
+      // Illustrations & Art
+      { file: "peacock.jpg", title: "Peacock Illustration", cat: "Illustration" },
+      { file: "Circle design.jpg", title: "Circle Geometric Design", cat: "Poster" },
+      { file: "cubic design [Recovered].jpg", title: "Cubic 3D Design", cat: "Illustration" },
+      { file: "flower.jpg", title: "Floral Artwork", cat: "Illustration" },
+      { file: "Hand drawing.jpg", title: "Hand Drawing Art", cat: "Illustration" },
+      { file: "Mouse.jpg", title: "Mouse Illustration", cat: "Illustration" },
+      { file: "Thar.jpg", title: "Thar Vehicle Design", cat: "Poster" },
+      { file: "Oil Label Design_02.jpg", title: "Oil Label Design", cat: "Print" },
+
+
+      // Web / UI
+      { file: "Landing page mockup.png", title: "Landing Page Mockup", cat: "Mockup" },
+
+      // Posters
+      { file: "sample poster 5.jpg", title: "Poster Design 5", cat: "Poster" },
+      { file: "sample poster 7_Business.jpg", title: "Business Poster", cat: "Poster" },
+      { file: "sample poster 8-hospital.jpg", title: "Hospital Poster 8", cat: "Poster" },
+      { file: "sample poster 9_Admission.jpg", title: "Admission Poster", cat: "Poster" },
+      { file: "sample poster 10_hospital.jpg", title: "Hospital Poster", cat: "Poster" },
+      { file: "sample poster 11_School.jpg", title: "School Poster", cat: "Poster" },
+      { file: "sample poster 12_shop.jpg", title: "Shop Poster", cat: "Poster" },
+      { file: "sample poster 13_Fashion shop.jpg", title: "Fashion Shop Poster", cat: "Poster" },
+      { file: "sample poster 14_football.jpg", title: "Football Poster", cat: "Poster" },
+      { file: "sample poster 15_BUSINESS.jpg", title: "Business Poster 15", cat: "Poster" },
+      { file: "sample poster 16_coesmatics.jpg", title: "Cosmetics Poster", cat: "Poster" },
+      { file: "sample poster 17_Shampoo.jpg", title: "Shampoo Ad Poster", cat: "Poster" },
+      { file: "sample poster 18_digital agency.jpg", title: "Digital Agency Poster", cat: "Poster" },
+      { file: "sample poster 19_paav bajji.jpg", title: "Food Poster", cat: "Poster" },
+      { file: "sample poster 20_Grocerry.jpg", title: "Grocery Poster", cat: "Poster" },
+      { file: "sample poster 21_Badam.jpg", title: "Badam Promo Poster", cat: "Poster" },
+      { file: "sample poster 22_cookies.jpg", title: "Cookies Poster", cat: "Poster" },
+      { file: "sample poster 23_Chips.jpg", title: "Chips Ad Poster", cat: "Poster" },
+      { file: "sample poster 24_Peanuts.jpg", title: "Peanuts Poster", cat: "Poster" },
+      { file: "sample poster 25_sunbites.jpg", title: "Sunbites Poster", cat: "Poster" },
+      { file: "sample poster 26_Joker.jpg", title: "Joker Creative", cat: "Poster" },
+      { file: "sample poster 27_A4.jpg", title: "A4 Poster Design", cat: "Poster" },
+      { file: "sample poster 28_Travelling Booking.jpg", title: "Travel Booking Poster", cat: "Poster" },
+      { file: "sample poster 29_Doctors.jpg", title: "Doctors Poster", cat: "Poster" },
+      { file: "sample poster 30_Sports.jpg", title: "Sports Poster", cat: "Poster" },
+      { file: "sample poster 31_Hospital.jpg", title: "Hospital Banner", cat: "Poster" },
+      { file: "sample poster 32_Go green.jpg", title: "Go Green Poster", cat: "Poster" },
+      { file: "sample poster 34_Expo.jpg", title: "Expo Poster", cat: "Poster" },
+      { file: "sample poster 35_Power energy.jpg", title: "Power Energy Poster", cat: "Poster" },
+      { file: "IT company.jpg", title: "Corporate Design Flyer", cat: "Poster" },
+      { file: "IT company 2.jpg", title: "Corporate Design Flyer V2", cat: "Poster" },
+      { file: "company 2.jpg", title: "Annual Report Cover Page", cat: "Poster" },
+      { file: "company 3.jpg", title: "Annual Report Cover Page V2", cat: "Poster" },
+      { file: "company 4.jpg", title: "Corporate Design Flyer V3", cat: "Poster" },
+      { file: "company 5.jpg", title: "Corporate Design Flyer V4", cat: "Poster" },
+      { file: "company 7.jpg", title: "Creative Marketing Report 2030", cat: "Poster" },
+      { file: "company 8.jpg", title: "Creative Marketing Report 2030 V2", cat: "Poster" },
+      { file: "Company.jpg", title: "Company Profile Cover", cat: "Poster" },
+      { file: "j (ABC).jpg", title: "ABC Steps Infographic", cat: "Poster" },
+      { file: "ACI rice.jpg", title: "ACI Rice Label", cat: "Poster" },
+      { file: "Chai rice.jpg", title: "Chai Rice Packaging", cat: "Poster" },
+      { file: "indusland rice.jpg", title: "Indusland Rice Label", cat: "Poster" },
+      { file: "mansoori rice.jpg", title: "Mansoori Rice Label", cat: "Poster" },
+      { file: "fresh milk.jpg", title: "Fresh Milk Package", cat: "Poster" },
+      { file: "Ginger & Garlic.jpg", title: "Ginger & Garlic Label", cat: "Poster" },
+      { file: "Natures almonds.jpg", title: "Natures Almonds Label", cat: "Poster" },
+      { file: "Maruthi Victoris.jpg", title: "Maruthi Victoris Label", cat: "Poster" },
+      { file: "Herbal Tea Brand.jpg", title: "Herbal Tea Brand", cat: "Poster" },
+      { file: "2koutfit.jpeg", title: "2koutfit", cat: "Print" },
+
+    ];
+
+    /* ───────────────────────────────────────────────
+       BUILD GALLERY
+    ─────────────────────────────────────────────── */
+    const categories = ["All", ...new Set(galleryData.map(d => d.cat))];
+    let activeFilter = "All";
+    let currentIndex = 0;
+    let visibleItems = [...galleryData];
+
+    // Filter buttons
+    const filterBar = document.getElementById('filterBar');
+    categories.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn' + (cat === 'All' ? ' active' : '');
+      btn.textContent = cat;
+      btn.addEventListener('click', () => filterGallery(cat));
+      filterBar.appendChild(btn);
+    });
+
+    // Gallery items
+    const grid = document.getElementById('galleryGrid');
+    galleryData.forEach((item, idx) => {
+      const div = document.createElement('div');
+      div.className = 'gallery-item reveal';
+      div.dataset.cat = item.cat;
+      div.dataset.idx = idx;
+      div.innerHTML = `
+      <img src="port/${encodeURIComponent(item.file)}" alt="${item.title}" loading="lazy" />
+      <div class="gallery-overlay">
+        <div class="gallery-title">${item.title}</div>
+        <div class="gallery-cat-tag">${item.cat}</div>
+      </div>
+      <div class="gallery-zoom">⤢</div>
+    `;
+      div.addEventListener('click', () => openLightbox(idx));
+      grid.appendChild(div);
+    });
+
+    function filterGallery(cat) {
+      activeFilter = cat;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent === cat);
+      });
+      const items = document.querySelectorAll('.gallery-item');
+      let count = 0;
+      items.forEach(item => {
+        const show = cat === 'All' || item.dataset.cat === cat;
+        item.classList.toggle('hidden', !show);
+        if (show) {
+          count++;
+          // Stagger re-reveal
+          item.style.animationDelay = (count * 0.03) + 's';
+        }
+      });
+      visibleItems = cat === 'All' ? galleryData : galleryData.filter(d => d.cat === cat);
+      document.getElementById('visibleCount').textContent = count;
+    }
+
+    /* ───────────────────────────────────────────────
+       LIGHTBOX
+    ─────────────────────────────────────────────── */
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+
+    function openLightbox(globalIdx) {
+      const item = galleryData[globalIdx];
+      lightboxImg.src = 'port/' + encodeURIComponent(item.file);
+      lightboxImg.alt = item.title;
+      lightboxCaption.innerHTML = `<strong>${item.title}</strong> &nbsp;·&nbsp; ${item.cat}`;
+      currentIndex = visibleItems.indexOf(item);
+      if (currentIndex === -1) currentIndex = 0;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function navigate(dir) {
+      currentIndex = (currentIndex + dir + visibleItems.length) % visibleItems.length;
+      const item = visibleItems[currentIndex];
+      lightboxImg.style.opacity = '0';
+      lightboxImg.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        lightboxImg.src = 'port/' + encodeURIComponent(item.file);
+        lightboxImg.alt = item.title;
+        lightboxCaption.innerHTML = `<strong>${item.title}</strong> &nbsp;·&nbsp; ${item.cat}`;
+        lightboxImg.style.opacity = '1';
+        lightboxImg.style.transform = 'scale(1)';
+      }, 200);
+      lightboxImg.style.transition = 'opacity 0.2s, transform 0.2s';
+    }
+
+    document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+    document.getElementById('lightboxPrev').addEventListener('click', () => navigate(-1));
+    document.getElementById('lightboxNext').addEventListener('click', () => navigate(1));
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') navigate(-1);
+      if (e.key === 'ArrowRight') navigate(1);
+    });
+
+    /* ───────────────────────────────────────────────
+       NAVBAR
+    ─────────────────────────────────────────────── */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      const spans = hamburger.querySelectorAll('span');
+      if (navLinks.classList.contains('open')) {
+        spans[0].style.cssText = 'transform:rotate(45deg) translate(5px,5px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.cssText = 'transform:rotate(-45deg) translate(5px,-5px)';
+      } else {
+        spans.forEach(s => { s.style.cssText = ''; });
+      }
+    });
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        hamburger.querySelectorAll('span').forEach(s => { s.style.cssText = ''; });
+      });
+    });
+
+    /* ───────────────────────────────────────────────
+       SCROLL REVEAL
+    ─────────────────────────────────────────────── */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    /* ───────────────────────────────────────────────
+
+    /* ───────────────────────────────────────────────
+       CUSTOM CURSOR
+    ─────────────────────────────────────────────── */
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+    });
+
+    function animateCursor() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    /* ───────────────────────────────────────────────
+       SCROLL PROGRESS BAR
+    ─────────────────────────────────────────────── */
+    const scrollProgress = document.getElementById('scrollProgress');
+    window.addEventListener('scroll', () => {
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalScroll > 0) {
+        const percentage = (window.scrollY / totalScroll) * 100;
+        scrollProgress.style.width = percentage + '%';
+      }
+    });
+
+    /* ───────────────────────────────────────────────
+       CONTACT FORM FEEDBACK
+    ─────────────────────────────────────────────── */
+    const submitBtn = document.querySelector('.form-submit');
+    submitBtn.addEventListener('click', async function () {
+      const name = document.getElementById('contactName').value.trim();
+      const email = document.getElementById('contactEmail').value.trim();
+      const phone = document.getElementById('contactPhone').value.trim();
+      const service = document.getElementById('contactService').value;
+      const message = document.getElementById('contactMessage').value.trim();
+
+      if (!name || !email || !phone || !message) {
+        alert("Please fill all required fields (Name, Email, Phone, Message).");
+        return;
+      }
+
+      this.textContent = 'Sending...';
+      this.style.pointerEvents = 'none';
+
+      try {
+        const response = await fetch('contact.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ name, email, phone, service, message })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          this.textContent = '✓ Message Sent!';
+          this.style.background = 'var(--green)';
+          
+          // Clear form
+          document.getElementById('contactName').value = '';
+          document.getElementById('contactEmail').value = '';
+          document.getElementById('contactPhone').value = '';
+          document.getElementById('contactService').value = '';
+          document.getElementById('contactMessage').value = '';
+        } else {
+          this.textContent = '✗ Failed to send';
+          this.style.background = '#d9534f';
+          console.error(result.message);
+        }
+      } catch (err) {
+        this.textContent = '✗ Error';
+        this.style.background = '#d9534f';
+        console.error(err);
+      }
+
+      setTimeout(() => {
+        this.textContent = 'Send Message →';
+        this.style.background = '';
+        this.style.pointerEvents = 'auto';
+      }, 3000);
+    });
+
+    /* ───────────────────────────────────────────────
+       RE-OBSERVE GALLERY ITEMS AFTER FILTER
+    ─────────────────────────────────────────────── */
+    document.querySelectorAll('.gallery-item').forEach(el => revealObserver.observe(el));
+  </script>
+</body>
+
+</html>

@@ -1741,14 +1741,32 @@
         right: 0;
         bottom: 0;
         background: var(--cream);
-        align-items: center;
+        align-items: flex-start;
         justify-content: center;
+        padding-left: 10vw;
         gap: 36px;
         z-index: 99;
       }
 
       .nav-links.open a {
-        font-size: 1.2rem;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--ink);
+      }
+      .nav-links.open a::after {
+        display: none;
+      }
+      .nav-links.open .nav-cta {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 14px 32px;
+        margin-top: 16px;
       }
     }
 
@@ -1768,11 +1786,11 @@
       height: 48px !important;
       border-radius: 50% !important;
       border: 1.5px solid var(--accent) !important;
-      background: transparent !important;
+      background: #ffffff !important; /* White background inside */
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
-      color: #ffffff !important;
+      color: var(--accent) !important; /* Theme colored icon so it's visible on white */
     }
     
     .service-icon {
@@ -1786,8 +1804,46 @@
     }
     /* ------------------------------ */
     
+  
+    /* --- MOBILE MENU FIXES --- */
+    nav.menu-open {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    
+    .mobile-close {
+      display: none;
+    }
+    
+    @media (max-width: 900px) {
+      .nav-logo {
+        font-size: 1.15rem;
+        max-width: 75%;
+      }
+      .nav-logo span {
+        display: none;
+      }
+      .nav-links.open .mobile-close {
+        display: flex;
+        position: absolute;
+        top: 24px;
+        right: 6vw;
+        width: 48px;
+        height: 48px;
+        align-items: center;
+        justify-content: center;
+        background: var(--white);
+        border: 1px solid var(--sand-2);
+        border-radius: 50%;
+        color: var(--ink);
+        z-index: 101;
+        cursor: pointer;
+      }
+    }
+    /* ------------------------- */
+    
   </style>
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 </head>
 
 <body>
@@ -1803,6 +1859,7 @@
   <nav id="navbar">
     <a href="#" class="nav-logo">Gokul Rajaa | <span>Graphic Designer</span></a>
     <ul class="nav-links" id="navLinks">
+      <div class="mobile-close" id="mobileClose"><i data-lucide="x"></i></div>
       <li><a href="#about">About</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#gallery">Gallery</a></li>
@@ -2035,7 +2092,13 @@
           </div>
         </a>
         <a href="https://www.linkedin.com/in/gokul-rajaa-eswaran-752906236?utm_source=share_via&amp;utm_content=profile&amp;utm_medium=member_android" class="contact-link" target="_blank" rel="noopener noreferrer">
-          <div class="contact-link-icon"><i data-lucide="linkedin"></i></div>
+          <div class="contact-link-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+              <rect x="2" y="9" width="4" height="12"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+          </div>
           <div class="contact-link-text">
             <strong>LinkedIn</strong>
             <span>Gokul Rajaa</span>
@@ -2382,8 +2445,18 @@
 
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.getElementById('navLinks');
+
+    const mobileClose = document.getElementById('mobileClose');
+    if (mobileClose) {
+      mobileClose.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        navbar.classList.remove('menu-open');
+        hamburger.querySelectorAll('span').forEach(s => { s.style.cssText = ''; });
+      });
+    }
     hamburger.addEventListener('click', () => {
       navLinks.classList.toggle('open');
+      navbar.classList.toggle('menu-open');
       const spans = hamburger.querySelectorAll('span');
       if (navLinks.classList.contains('open')) {
         spans[0].style.cssText = 'transform:rotate(45deg) translate(5px,5px)';
@@ -2396,6 +2469,7 @@
     navLinks.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => {
         navLinks.classList.remove('open');
+        navbar.classList.remove('menu-open');
         hamburger.querySelectorAll('span').forEach(s => { s.style.cssText = ''; });
       });
     });

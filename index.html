@@ -1761,7 +1761,33 @@
         grid-template-columns: 1fr;
       }
     }
+  
+    /* --- LUCIDE ICON OVERRIDES --- */
+    .about-icon, .contact-link-icon, .service-icon {
+      width: 48px !important;
+      height: 48px !important;
+      border-radius: 50% !important;
+      border: 1.5px solid var(--accent) !important;
+      background: transparent !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      color: #ffffff !important;
+    }
+    
+    .service-icon {
+      margin-bottom: 16px !important;
+    }
+    
+    .about-icon svg, .contact-link-icon svg, .service-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke-width: 1.5;
+    }
+    /* ------------------------------ */
+    
   </style>
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body>
@@ -1848,28 +1874,28 @@
       </p>
       <div class="about-list">
         <div class="about-item reveal reveal-delay-1">
-          <div class="about-icon">🎨</div>
+          <div class="about-icon"><i data-lucide="palette"></i></div>
           <div class="about-item-text">
             <strong>Brand Identity Design</strong>
             <span>Logos, color systems, brand guidelines</span>
           </div>
         </div>
         <div class="about-item reveal reveal-delay-2">
-          <div class="about-icon">🖨️</div>
+          <div class="about-icon"><i data-lucide="printer"></i></div>
           <div class="about-item-text">
             <strong>Print & Packaging</strong>
             <span>Labels, posters, brochures, business cards</span>
           </div>
         </div>
         <div class="about-item reveal reveal-delay-3">
-          <div class="about-icon">📱</div>
+          <div class="about-icon"><i data-lucide="smartphone"></i></div>
           <div class="about-item-text">
             <strong>Social Media Creatives</strong>
             <span>Covers, campaigns, promotional artwork</span>
           </div>
         </div>
         <div class="about-item reveal reveal-delay-4">
-          <div class="about-icon">💻</div>
+          <div class="about-icon"><i data-lucide="monitor"></i></div>
           <div class="about-item-text">
             <strong>UI / Web Mockups</strong>
             <span>Landing pages, app screens</span>
@@ -1893,38 +1919,38 @@
     <div class="services-grid">
       <div class="service-card reveal">
         <div class="service-num">01</div>
-        <div class="service-icon">🏷️</div>
+        <div class="service-icon"><i data-lucide="tag"></i></div>
         <div class="service-name">Logo & Branding</div>
         <p class="service-desc">Complete brand identity packages — wordmarks, symbols, color palettes, and typography
           systems.</p>
       </div>
       <div class="service-card reveal reveal-delay-1">
         <div class="service-num">02</div>
-        <div class="service-icon">🖼️</div>
+        <div class="service-icon"><i data-lucide="image"></i></div>
         <div class="service-name">Poster Design</div>
         <p class="service-desc">Eye-catching promotional and event posters designed for print and digital media.</p>
       </div>
       <div class="service-card reveal reveal-delay-2">
         <div class="service-num">03</div>
-        <div class="service-icon">📦</div>
+        <div class="service-icon"><i data-lucide="package"></i></div>
         <div class="service-name">Label & Packaging</div>
         <p class="service-desc">Product labels, packaging design, and point-of-sale materials for FMCG brands.</p>
       </div>
       <div class="service-card reveal reveal-delay-3">
         <div class="service-num">04</div>
-        <div class="service-icon">💼</div>
+        <div class="service-icon"><i data-lucide="briefcase"></i></div>
         <div class="service-name">Business Collateral</div>
         <p class="service-desc">Business cards, letterheads, brochures, and corporate stationery design.</p>
       </div>
       <div class="service-card reveal reveal-delay-4">
         <div class="service-num">05</div>
-        <div class="service-icon">📲</div>
+        <div class="service-icon"><i data-lucide="share-2"></i></div>
         <div class="service-name">Social Media Design</div>
         <p class="service-desc">Facebook covers, Instagram templates, banners, and ad creatives.</p>
       </div>
       <div class="service-card reveal">
         <div class="service-num">06</div>
-        <div class="service-icon">🖥️</div>
+        <div class="service-icon"><i data-lucide="layout"></i></div>
         <div class="service-name">Web & UI Mockups</div>
         <p class="service-desc">Landing page mockups, and app screen designs.</p>
       </div>
@@ -1995,21 +2021,21 @@
       </div>
       <div class="contact-links reveal reveal-delay-3">
         <a href="mailto:gokul.graphicarts@gmail.com" class="contact-link">
-          <div class="contact-link-icon">✉️</div>
+          <div class="contact-link-icon"><i data-lucide="mail"></i></div>
           <div class="contact-link-text">
             <strong>Email Me</strong>
             <span>gokul.graphicarts@gmail.com</span>
           </div>
         </a>
         <a href="tel:+919688591477" class="contact-link">
-          <div class="contact-link-icon">📞</div>
+          <div class="contact-link-icon"><i data-lucide="phone"></i></div>
           <div class="contact-link-text">
             <strong>Call / WhatsApp</strong>
             <span>+91 96885 91477</span>
           </div>
         </a>
         <a href="https://www.linkedin.com/in/gokul-rajaa-eswaran-752906236?utm_source=share_via&amp;utm_content=profile&amp;utm_medium=member_android" class="contact-link" target="_blank" rel="noopener noreferrer">
-          <div class="contact-link-icon">🔗</div>
+          <div class="contact-link-icon"><i data-lucide="linkedin"></i></div>
           <div class="contact-link-text">
             <strong>LinkedIn</strong>
             <span>Gokul Rajaa</span>
@@ -2487,6 +2513,7 @@
     ─────────────────────────────────────────────── */
     document.querySelectorAll('.gallery-item').forEach(el => revealObserver.observe(el));
   </script>
+  <script>lucide.createIcons();</script>
 </body>
 
 </html>
